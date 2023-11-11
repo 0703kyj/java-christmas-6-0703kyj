@@ -1,6 +1,7 @@
 package christmas.service;
 
 import christmas.domain.Order;
+import christmas.domain.discount.GiveawayDiscount;
 import christmas.util.DecimalFormatter;
 
 public class OrderService {
@@ -17,5 +18,14 @@ public class OrderService {
 
     public String getPriceBeforeDiscount() {
         return DecimalFormatter.format(order.getTotalPrice());
+    }
+
+    public int getTotalPrice() {
+        return order.getTotalPrice();
+    }
+
+    public String getGiveaway() {
+        GiveawayDiscount giveawayDiscount = new GiveawayDiscount(order.getTotalPrice());
+        return giveawayDiscount.getGiveaway();
     }
 }

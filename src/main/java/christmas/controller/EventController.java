@@ -1,10 +1,15 @@
 package christmas.controller;
 
 import christmas.domain.EventDate;
+import christmas.domain.discount.DdayDiscount;
+import christmas.domain.discount.Discount;
+import christmas.domain.discount.GiveawayDiscount;
+import christmas.domain.discount.SpecialDiscount;
 import christmas.service.DiscountService;
 import christmas.service.OrderService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.List;
 
 public class EventController {
     private InputView inputView;
@@ -28,13 +33,25 @@ public class EventController {
         outputView.printBenefits(eventDate);
         outputView.printOrderMenu(orderService.printOrder());
         outputView.printPriceBeforeDiscount(orderService.getPriceBeforeDiscount());
-        outputView.printGiveawayMenu(discountService.getGiveaway());
+        outputView.printGiveawayMenu(orderService.getGiveaway());
         calculateDiscounts();
         outputView.printTotalDiscount(discountService.getTotalDiscount());
     }
 
     private void calculateDiscounts() {
-        discountService.calculateDdayDiscount(eventDate);
+        List<Discount> discounts = getDiscounts();
+
+        for (Discount discount : discounts) {
+            discountService.calculateDiscount(discount);
+        }
+    }
+
+    private List<Discount> getDiscounts() {
+        return List.of(
+                new DdayDiscount(eventDate),
+                new SpecialDiscount(eventDate),
+                new GiveawayDiscount(orderService.getTotalPrice())
+        );
     }
 
     private void input() {

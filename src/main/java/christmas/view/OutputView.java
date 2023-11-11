@@ -46,20 +46,20 @@ public class OutputView {
         printDiscounts(totalDiscount);
     }
 
-    public void printGiveawayMenu(String giveawayMenu) {
-        System.out.println(GIVEAWAY_MENU_TITLE);
-        if(checkCanDiscount(giveawayMenu.isBlank())){
-            return;
-        }
-        System.out.println(giveawayMenu);
-    }
-
     private void printDiscounts(List<Discount> totalDiscount) {
         for (Discount discount : totalDiscount) {
             String discountTitle = discount.getTitle();
             String discountPrice = discount.getDiscountPrice();
             System.out.println(discountTitle+DISCOUNT_SUFFIX.formatted(discountPrice));
         }
+    }
+
+    public void printGiveawayMenu(String giveawayMenu) {
+        System.out.println(GIVEAWAY_MENU_TITLE);
+        if(checkCanDiscount(giveawayMenu.isBlank())){
+            return;
+        }
+        System.out.println(giveawayMenu);
     }
 
     private boolean checkCanDiscount(boolean canDiscount) {
