@@ -21,7 +21,10 @@ public class EventController {
         outputView.printInfo();
         input();
 
-        outputView.printBenefits(eventDate,orderService);
+        outputView.printBenefits(eventDate);
+        outputView.printOrderMenu(orderService.printOrder());
+        outputView.printPriceBeforeDiscount(orderService.getPriceBeforeDiscount());
+        outputView.printGiveawayMenu(orderService.getGiveaway());
     }
 
     private void input() {

@@ -42,7 +42,6 @@ public class Order {
 
         for (Menu menu : totalMenu) {
             if(menu.isOrdered()){
-                System.out.println(menu);
                 totalPrice += menu.getPrice();
             }
         }
