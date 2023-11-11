@@ -21,4 +21,8 @@ public class EventDate {
                 DateValue.EVENT_MONTH.getValue(),
                 day);
     }
+
+    public int getDay(){
+        return date.getDayOfMonth();
+    }
 }

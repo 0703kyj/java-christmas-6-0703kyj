@@ -1,12 +1,12 @@
 package christmas;
 
-import christmas.domain.Order;
-import christmas.view.InputView;
+import christmas.config.EventConfig;
+import christmas.controller.EventController;
 
 public class Application {
+
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        Order order = inputView.readOrder();
-        System.out.println(order);
+        EventController eventController = EventConfig.getEventController();
+        eventController.run();
     }
 }
