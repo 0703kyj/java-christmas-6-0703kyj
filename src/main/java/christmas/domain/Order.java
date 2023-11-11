@@ -33,12 +33,6 @@ public class Order {
         }
     }
 
-    private boolean isAllDrinks() {
-        return totalMenu.stream()
-                .filter(menu -> menu.isOrdered())
-                .allMatch(menu -> menu instanceof Drink);
-    }
-
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -48,6 +42,12 @@ public class Order {
             }
         }
         return result.toString();
+    }
+
+    private boolean isAllDrinks() {
+        return totalMenu.stream()
+                .filter(menu -> menu.isOrdered())
+                .allMatch(menu -> menu instanceof Drink);
     }
 
     private void checkOrdered(Menu menu) {
