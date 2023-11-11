@@ -9,10 +9,14 @@ import java.util.Optional;
 
 public class Order {
     private static final int MAX_ORDER_COUNT = 20;
-    private final List<Menu> totalMenu;
+    private List<Menu> totalMenu;
     private int totalOrderCount;
 
     public Order(){
+        init();
+    }
+
+    public void init() {
         totalMenu = MenuInitializer.initMenu();
         totalOrderCount = 0;
     }
@@ -31,6 +35,18 @@ public class Order {
         if (isAllDrinks()) {
             throw new NotValidOrderException();
         }
+    }
+
+    public int getTotalPrice(){
+        int totalPrice = 0;
+
+        for (Menu menu : totalMenu) {
+            if(menu.isOrdered()){
+                System.out.println(menu);
+                totalPrice += menu.getPrice();
+            }
+        }
+        return totalPrice;
     }
 
     @Override

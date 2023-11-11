@@ -20,9 +20,9 @@ public class TypeChanger {
         }
     }
 
-    public static Order toOrder(String input){
+    public static Order toOrder(String input, Order order){
         try{
-            return parseMenuInput(input);
+            return parseMenuInput(input, order);
         }catch (NumberFormatException e){
             throw new NotValidDateException();
         }
@@ -36,8 +36,8 @@ public class TypeChanger {
         }
     }
 
-    private static Order parseMenuInput(String input) {
-        Order order = new Order();
+    private static Order parseMenuInput(String input, Order order) {
+        order.init();
 
         List<String> totalMenu = splitToDelimiter(input, DELIMITER_TOTAL_MENU);
         for (String menu : totalMenu) {

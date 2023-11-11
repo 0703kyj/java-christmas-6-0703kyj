@@ -16,7 +16,7 @@ class OrderTest {
     private Order order;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         order = new Order();
     }
 
@@ -31,7 +31,7 @@ class OrderTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0,-1})
+    @ValueSource(ints = {0, -1})
     @DisplayName("메뉴의 개수는 1 이상의 숫자만 입력되도록 해야 한다.")
     void minOrderCountTest(int orderCount) {
         String name = "양송이수프";
@@ -45,15 +45,15 @@ class OrderTest {
     void notNumberOrderCountTest() {
         String input = "양송이스프-일";
 
-        assertThatThrownBy(() -> TypeChanger.toOrder(input))
+        assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
                 .isInstanceOf(NotValidOrderException.class);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"양송이스프-1~제로콜라-3","양송이스프:1,제로콜라:3"})
+    @ValueSource(strings = {"양송이스프-1~제로콜라-3", "양송이스프:1,제로콜라:3"})
     @DisplayName("사용자 입력이 메뉴 형식관 같아야 한다.")
     void notValidFormatTest(String input) {
-        assertThatThrownBy(() -> TypeChanger.toOrder(input))
+        assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
                 .isInstanceOf(NotValidOrderException.class);
     }
 
@@ -62,15 +62,15 @@ class OrderTest {
     void duplicateMenuTest() {
         String input = "양송이스프-1,양송이스프-3";
 
-        assertThatThrownBy(() -> TypeChanger.toOrder(input))
+        assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
                 .isInstanceOf(NotValidOrderException.class);
     }
 
     @ParameterizedTest
-    @CsvSource({"'제로콜라',3","'샴페인',3","'레드와인',4"})
+    @CsvSource({"'제로콜라',3", "'샴페인',3", "'레드와인',4"})
     @DisplayName("음료만 주문하면 안된다.")
-    void onlyOrderDrinkTest(String name,int orderCount) {
-        order.orderMenu(name,orderCount);
+    void onlyOrderDrinkTest(String name, int orderCount) {
+        order.orderMenu(name, orderCount);
 
         assertThatThrownBy(() -> order.checkOnlyDrink())
                 .isInstanceOf(NotValidOrderException.class);
@@ -81,7 +81,7 @@ class OrderTest {
     void overMaxOrderCountTest() {
         String input = "양송이스프-1,시저샐러드-3,제로콜라-17";
 
-        assertThatThrownBy(() -> TypeChanger.toOrder(input))
+        assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
                 .isInstanceOf(NotValidOrderException.class);
     }
 }

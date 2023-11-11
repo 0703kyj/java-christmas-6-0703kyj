@@ -1,6 +1,6 @@
 package christmas.domain.menu;
 
-public class Menu implements Comparable<String>{
+public class Menu implements Comparable<String> {
     protected String name;
     protected int price;
     protected int orderCount;
@@ -17,21 +17,25 @@ public class Menu implements Comparable<String>{
         this.orderCount += orderCount;
     }
 
+    public int getPrice() {
+        return price * orderCount;
+    }
+
     @Override
     public String toString() {
-        return MENU_INFO.formatted(name,orderCount);
+        return MENU_INFO.formatted(name, orderCount);
     }
 
     @Override
     public int compareTo(String name) {
-        if((this.name).equals(name)){
+        if ((this.name).equals(name)) {
             return 1;
         }
         return 0;
     }
 
     public boolean isOrdered() {
-        if((this.orderCount)>0){
+        if ((this.orderCount) > 0) {
             return true;
         }
         return false;

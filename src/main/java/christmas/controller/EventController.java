@@ -1,7 +1,6 @@
 package christmas.controller;
 
 import christmas.domain.EventDate;
-import christmas.domain.Order;
 import christmas.service.OrderService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -11,11 +10,11 @@ public class EventController {
     private OutputView outputView;
     private OrderService orderService;
     private EventDate eventDate;
-    private Order order;
 
-    public EventController(InputView inputView, OutputView outputView) {
+    public EventController(InputView inputView, OutputView outputView, OrderService orderService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.orderService = orderService;
     }
 
     public void run(){
@@ -27,7 +26,6 @@ public class EventController {
 
     private void input() {
         eventDate = inputView.readVisitDate();
-        order = inputView.readOrder();
-        orderService = new OrderService(order);
+        inputView.readOrder();
     }
 }
