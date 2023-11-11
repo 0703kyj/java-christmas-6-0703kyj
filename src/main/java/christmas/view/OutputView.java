@@ -3,7 +3,6 @@ package christmas.view;
 import christmas.domain.EventDate;
 import christmas.resource.DateValue;
 import christmas.service.OrderService;
-import java.text.DecimalFormat;
 
 public class OutputView {
     private static final String INFO_MESSAGE = "안녕하세요! 우테코 식당 " + DateValue.EVENT_MONTH + "월 이벤트 플래너입니다.";
@@ -29,10 +28,9 @@ public class OutputView {
     private void printOrderMenu(String order) {
         System.out.println(ORDER_MENU_TITLE);
         System.out.println(order);
-        System.out.println();
     }
 
-    private void printPriceBeforeDiscount(DecimalFormat priceBeforeDiscount) {
+    private void printPriceBeforeDiscount(String priceBeforeDiscount) {
         System.out.println(BEFORE_DISCOUNT_TITLE);
         System.out.println(priceBeforeDiscount+BEFORE_DISCOUNT_PRICE);
         System.out.println();

@@ -1,7 +1,7 @@
 package christmas.service;
 
 import christmas.domain.Order;
-import java.text.DecimalFormat;
+import christmas.util.DecimalFormatter;
 
 public class OrderService {
     private Order order;
@@ -14,8 +14,7 @@ public class OrderService {
         return order.toString();
     }
 
-    public DecimalFormat getPriceBeforeDiscount() {
-
-        return null;
+    public String getPriceBeforeDiscount() {
+        return DecimalFormatter.format(order.getTotalPrice());
     }
 }
