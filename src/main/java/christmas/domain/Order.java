@@ -1,53 +1,86 @@
 package christmas.domain;
 
-import christmas.domain.menu.Appetizer;
-import christmas.domain.menu.Dessert;
 import christmas.domain.menu.Drink;
-import christmas.domain.menu.MainMenu;
 import christmas.domain.menu.Menu;
-import christmas.resource.menu.AppetizerValue;
-import christmas.resource.menu.DessertValue;
-import christmas.resource.menu.DrinkValue;
-import christmas.resource.menu.MainMenuValue;
-import java.util.ArrayList;
+import christmas.exception.argument.NotValidOrderException;
+import christmas.util.MenuInitializer;
 import java.util.List;
 
 public class Order {
-    private List<Menu> totalMenu;
+    private static final int MAX_ORDER_COUNT = 20;
+    private final List<Menu> totalMenu;
+    private int totalOrderCount;
 
     public Order(){
-        totalMenu = new ArrayList<>();
-        initMenu();
+        totalMenu = MenuInitializer.initMenu();
+        totalOrderCount = 0;
     }
 
-    private void initMenu() {
-        setAppetizer();
-        setMainMenu();
-        setDessert();
-        setDrink();
+    public void orderMenu(String name, int orderCount) {
+        validateOrder(name, orderCount);
+
+        totalMenu.stream()
+                .filter(menu -> menu.compareTo(name) > 0)
+                .findFirst()
+                .ifPresentOrElse(
+                        menu -> menu.order(orderCount),
+                        () -> { throw new NotValidOrderException(); }
+                );
     }
 
-    private void setAppetizer() {
-        for (AppetizerValue appetizer : AppetizerValue.values()) {
-            totalMenu.add(new Appetizer(appetizer.getName(),appetizer.getPrice()));
+    public void print() {
+        for (Menu menu : totalMenu) {
+            if(menu.isOrdered()){
+                System.out.println(menu);
+            }
         }
     }
 
-    private void setMainMenu() {
-        for (MainMenuValue mainMenu : MainMenuValue.values()) {
-            totalMenu.add(new MainMenu(mainMenu.getName(),mainMenu.getPrice()));
+    private void validateOrder(String name, int orderCount){
+        validateDuplicate(name);
+        validateOrderCount(orderCount);
+    }
+
+    private void validateDuplicate(String name) {
+        totalMenu.stream()
+                .filter(menu -> menu.compareTo(name) > 0)
+                .findFirst()
+                .ifPresentOrElse(
+                        menu -> {
+                            if (menu.isOrdered()) {
+                                throw new NotValidOrderException();
+                            }
+                        },
+                        () -> { throw new NotValidOrderException(); }
+                );
+    }
+
+    private void validateOrderCount(int orderCount) {
+        validateOverMax(orderCount);
+        validateZero(orderCount);
+    }
+
+    private static void validateZero(int orderCount) {
+        if (orderCount <= 0) {
+            throw new NotValidOrderException();
         }
     }
 
-    private void setDessert() {
-        for (DessertValue dessert : DessertValue.values()) {
-            totalMenu.add(new Dessert(dessert.getName(),dessert.getPrice()));
+    private void validateOverMax(int orderCount) {
+        totalOrderCount += orderCount;
+
+        if (totalOrderCount > MAX_ORDER_COUNT) {
+            throw new NotValidOrderException();
         }
     }
 
-    private void setDrink() {
-        for (DrinkValue drink : DrinkValue.values()) {
-            totalMenu.add(new Drink(drink.getName(), drink.getPrice()));
+    public void checkOnlyDrink() {
+        boolean allDrinks = totalMenu.stream()
+                .filter(menu -> menu.isOrdered())
+                .allMatch(menu -> menu instanceof Drink);
+
+        if (allDrinks) {
+            throw new NotValidOrderException();
         }
     }
 }
