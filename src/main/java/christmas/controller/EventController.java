@@ -5,6 +5,7 @@ import christmas.domain.discount.DdayDiscount;
 import christmas.domain.discount.Discount;
 import christmas.domain.discount.GiveawayDiscount;
 import christmas.domain.discount.SpecialDiscount;
+import christmas.domain.discount.WeekdayDiscount;
 import christmas.service.DiscountService;
 import christmas.service.OrderService;
 import christmas.view.InputView;
@@ -49,6 +50,7 @@ public class EventController {
     private List<Discount> getDiscounts() {
         return List.of(
                 new DdayDiscount(eventDate),
+                new WeekdayDiscount(eventDate, orderService.getCountOfDesserts()),
                 new SpecialDiscount(eventDate),
                 new GiveawayDiscount(orderService.getTotalPrice())
         );

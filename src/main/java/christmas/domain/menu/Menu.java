@@ -21,6 +21,10 @@ public class Menu implements Comparable<String> {
         return price * orderCount;
     }
 
+    public int getOrderCount() {
+        return orderCount;
+    }
+
     @Override
     public String toString() {
         return MENU_INFO.formatted(name, orderCount);

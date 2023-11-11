@@ -1,11 +1,14 @@
 package christmas.domain;
 
+import christmas.domain.menu.Dessert;
 import christmas.domain.menu.Drink;
+import christmas.domain.menu.MainMenu;
 import christmas.domain.menu.Menu;
 import christmas.exception.argument.NotValidOrderException;
 import christmas.util.MenuInitializer;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Order {
     private static final int MAX_ORDER_COUNT = 20;
@@ -29,6 +32,18 @@ public class Order {
                         menu -> menu.order(orderCount),
                         () -> { throw new NotValidOrderException(); }
                 );
+    }
+
+    public List<Menu> getMainMenus() {
+        return totalMenu.stream()
+                .filter(menu -> menu instanceof MainMenu)
+                .collect(Collectors.toList());
+    }
+
+    public List<Menu> getDesserts() {
+        return totalMenu.stream()
+                .filter(menu -> menu instanceof Dessert)
+                .collect(Collectors.toList());
     }
 
     public void checkOnlyDrink() {
