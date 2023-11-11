@@ -5,6 +5,7 @@ import christmas.domain.menu.Menu;
 import christmas.exception.argument.NotValidOrderException;
 import christmas.util.MenuInitializer;
 import java.util.List;
+import java.util.Optional;
 
 public class Order {
     private static final int MAX_ORDER_COUNT = 20;
@@ -19,21 +20,46 @@ public class Order {
     public void orderMenu(String name, int orderCount) {
         validateOrder(name, orderCount);
 
-        totalMenu.stream()
-                .filter(menu -> menu.compareTo(name) > 0)
-                .findFirst()
+        findMenu(name)
                 .ifPresentOrElse(
                         menu -> menu.order(orderCount),
                         () -> { throw new NotValidOrderException(); }
                 );
     }
 
-    public void print() {
+    public void checkOnlyDrink() {
+        if (isAllDrinks()) {
+            throw new NotValidOrderException();
+        }
+    }
+
+    private boolean isAllDrinks() {
+        return totalMenu.stream()
+                .filter(menu -> menu.isOrdered())
+                .allMatch(menu -> menu instanceof Drink);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
         for (Menu menu : totalMenu) {
             if(menu.isOrdered()){
-                System.out.println(menu);
+                result.append(menu);
             }
         }
+        return result.toString();
+    }
+
+    private void checkOrdered(Menu menu) {
+        if (menu.isOrdered()) {
+            throw new NotValidOrderException();
+        }
+    }
+
+    private Optional<Menu> findMenu(String name) {
+        return totalMenu.stream()
+                .filter(menu -> menu.compareTo(name) > 0)
+                .findFirst();
     }
 
     private void validateOrder(String name, int orderCount){
@@ -42,15 +68,9 @@ public class Order {
     }
 
     private void validateDuplicate(String name) {
-        totalMenu.stream()
-                .filter(menu -> menu.compareTo(name) > 0)
-                .findFirst()
+        findMenu(name)
                 .ifPresentOrElse(
-                        menu -> {
-                            if (menu.isOrdered()) {
-                                throw new NotValidOrderException();
-                            }
-                        },
+                        menu -> checkOrdered(menu),
                         () -> { throw new NotValidOrderException(); }
                 );
     }
@@ -70,16 +90,6 @@ public class Order {
         totalOrderCount += orderCount;
 
         if (totalOrderCount > MAX_ORDER_COUNT) {
-            throw new NotValidOrderException();
-        }
-    }
-
-    public void checkOnlyDrink() {
-        boolean allDrinks = totalMenu.stream()
-                .filter(menu -> menu.isOrdered())
-                .allMatch(menu -> menu instanceof Drink);
-
-        if (allDrinks) {
             throw new NotValidOrderException();
         }
     }

@@ -5,7 +5,7 @@ public class Menu implements Comparable<String>{
     protected int price;
     protected int orderCount;
 
-    private static final String MENU_INFO = "%s %d개";
+    private static final String MENU_INFO = "%s %d개\n";
 
     protected Menu(String name, int price) {
         this.name = name;

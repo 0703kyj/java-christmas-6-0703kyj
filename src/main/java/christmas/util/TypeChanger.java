@@ -28,6 +28,14 @@ public class TypeChanger {
         }
     }
 
+    private static int toIntOrder(String input){
+        try{
+            return Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            throw new NotValidOrderException();
+        }
+    }
+
     private static Order parseMenuInput(String input) {
         Order order = new Order();
 
@@ -46,14 +54,6 @@ public class TypeChanger {
             throw new NotValidOrderException();
         }
         order.orderMenu(preMenu.get(0),toIntOrder(preMenu.get(1)));
-    }
-
-    private static int toIntOrder(String input){
-        try{
-            return Integer.parseInt(input);
-        }catch (NumberFormatException e){
-            throw new NotValidOrderException();
-        }
     }
 
     private static List<String> splitToDelimiter(String input, String delimiter){
