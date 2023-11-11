@@ -1,15 +1,15 @@
 package christmas.domain.discount;
 
 import christmas.domain.EventDate;
-import christmas.resource.discount.WeekdayValue;
+import christmas.resource.discount.WeekendValue;
 
-public class WeekdayDiscount implements Discount {
+public class WeekendDiscount implements Discount{
     private static final int DISCOUNT_PRICE = 2023;
-    private static final String DISCOUNT_TITLE = "평일 할인";
+    private static final String DISCOUNT_TITLE = "주말 할인";
     private EventDate eventDate;
     private int menuCount;
 
-    public WeekdayDiscount(EventDate eventDate, int menuCount) {
+    public WeekendDiscount(EventDate eventDate, int menuCount) {
         this.eventDate = eventDate;
         this.menuCount = menuCount;
     }
@@ -26,7 +26,7 @@ public class WeekdayDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        if (checkWeekday() && hasMenu()) {
+        if (checkWeekend() && hasMenu()) {
             return true;
         }
         return false;
@@ -36,8 +36,8 @@ public class WeekdayDiscount implements Discount {
         return menuCount > 0;
     }
 
-    private boolean checkWeekday() {
-        for (WeekdayValue discountValue : WeekdayValue.values()) {
+    private boolean checkWeekend() {
+        for (WeekendValue discountValue : WeekendValue.values()) {
             if (discountValue.name().equalsIgnoreCase(eventDate.getDayOfWeek())) {
                 return true;
             }
