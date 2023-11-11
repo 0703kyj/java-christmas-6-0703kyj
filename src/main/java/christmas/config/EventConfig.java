@@ -2,6 +2,7 @@ package christmas.config;
 
 import christmas.controller.EventController;
 import christmas.domain.Order;
+import christmas.service.DiscountService;
 import christmas.service.OrderService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -10,7 +11,11 @@ public class EventConfig {
     private static Order order;
 
     public static EventController getEventController() {
-        return new EventController(getInputView(),getOutputView(),getOrderService());
+        return new EventController(getInputView(),getOutputView(),getOrderService(),getDiscountService());
+    }
+
+    private static DiscountService getDiscountService() {
+        return new DiscountService(getOrder());
     }
 
     private static OrderService getOrderService() {

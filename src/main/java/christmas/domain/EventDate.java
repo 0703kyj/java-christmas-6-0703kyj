@@ -33,4 +33,8 @@ public class EventDate {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN);
     }
+
+    public int getDifference(EventDate eventDate){
+        return this.getDay() - eventDate.getDay();
+    }
 }
