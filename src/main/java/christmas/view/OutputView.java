@@ -11,10 +11,11 @@ public class OutputView {
     private static final String NOTHING = "없음";
     private static final String ORDER_MENU_TITLE = "<주문 메뉴>";
     private static final String BEFORE_DISCOUNT_TITLE = "<할인 전 총주문 금액>";
-    private static final String BEFORE_DISCOUNT_PRICE = "원";
+    private static final String PRICE_FORMAT = "%s원";
+    private static final String DISCOUNT_FORMAT = "-%s원";
     private static final String GIVEAWAY_MENU_TITLE = "<증정 메뉴>";
     private static final String TOTAL_DISCOUNT_TITLE = "<혜택 내역>";
-    private static final String DISCOUNT_SUFFIX = ": -%s원";
+    private static final String TOTAL_DISCOUNT_PRICE_TITLE = "<총혜택 금액>";
 
     public OutputView() {}
 
@@ -33,7 +34,7 @@ public class OutputView {
 
     public void printPriceBeforeDiscount(String priceBeforeDiscount) {
         System.out.println(BEFORE_DISCOUNT_TITLE);
-        System.out.println(priceBeforeDiscount+BEFORE_DISCOUNT_PRICE);
+        System.out.println(PRICE_FORMAT.formatted(priceBeforeDiscount));
         System.out.println();
     }
 
@@ -44,13 +45,14 @@ public class OutputView {
             return;
         }
         printDiscounts(totalDiscount);
+        System.out.println();
     }
 
     private void printDiscounts(List<Discount> totalDiscount) {
         for (Discount discount : totalDiscount) {
             String discountTitle = discount.getTitle();
             String discountPrice = discount.getDiscountPrice();
-            System.out.println(discountTitle+DISCOUNT_SUFFIX.formatted(discountPrice));
+            System.out.println(discountTitle+ DISCOUNT_FORMAT.formatted(discountPrice));
         }
     }
 
@@ -60,6 +62,12 @@ public class OutputView {
             return;
         }
         System.out.println(giveawayMenu);
+    }
+
+    public void printTotalDiscountPrice(String totalDiscountPrice) {
+        System.out.println(TOTAL_DISCOUNT_PRICE_TITLE);
+        System.out.println(DISCOUNT_FORMAT.formatted(totalDiscountPrice));
+        System.out.println();
     }
 
     private boolean checkCanDiscount(boolean canDiscount) {

@@ -9,6 +9,7 @@ public class DdayDiscount implements Discount {
     private static final int DEFAULT_DISCOUNT_PRICE = 1000;
     private static final int DEFAULT_DISCOUNT_COUNT = 0;
     private static final String DISCOUNT_TITLE = "크리스마스 디데이 할인";
+    private static final String TITLE_SUFFIX = ": ";
     private static final EventDate startEventDate = new EventDate(START_DATE);
     private static final EventDate endEventDate = new EventDate(END_DATE);
     private EventDate eventDate;
@@ -27,7 +28,7 @@ public class DdayDiscount implements Discount {
 
     @Override
     public String getTitle() {
-        return DISCOUNT_TITLE;
+        return DISCOUNT_TITLE + TITLE_SUFFIX;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class DdayDiscount implements Discount {
         return DISCOUNT_PRICE * discountCount;
     }
 
-    private int calculateCount(){
+    private int calculateCount() {
         return (eventDate.getDifference(startEventDate));
     }
 
