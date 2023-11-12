@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.domain.EventDate;
 import christmas.domain.discount.Discount;
+import christmas.resource.BadgeValue;
 import christmas.resource.DateValue;
 import christmas.util.DecimalFormatter;
 import java.util.List;
@@ -15,6 +16,7 @@ public class OutputView {
     private static final String TOTAL_DISCOUNT_TITLE = "<혜택 내역>";
     private static final String TOTAL_DISCOUNT_PRICE_TITLE = "<총혜택 금액>";
     private static final String AFTER_DISCOUNT_TITLE = "<할인 후 예상 결제 금액>";
+    private static final String BADGE_TITLE = "<"+DateValue.EVENT_MONTH+"월 이벤트 배지>";
     private static final String PRICE_FORMAT = "%s원";
     private static final String NOTHING = "없음";
 
@@ -43,7 +45,7 @@ public class OutputView {
     public void printTotalDiscount(List<Discount> totalDiscount) {
         System.out.println(TOTAL_DISCOUNT_TITLE);
 
-        if (checkCanDiscount(totalDiscount.isEmpty())) {
+        if (checkCanNotPrint(totalDiscount.isEmpty())) {
             return;
         }
         printDiscounts(totalDiscount);
@@ -52,7 +54,7 @@ public class OutputView {
 
     public void printGiveawayMenu(String giveawayMenu) {
         System.out.println(GIVEAWAY_MENU_TITLE);
-        if (checkCanDiscount(giveawayMenu == null || giveawayMenu.isBlank())) {
+        if (checkCanNotPrint(giveawayMenu == null)) {
             return;
         }
         System.out.println(giveawayMenu);
@@ -65,22 +67,26 @@ public class OutputView {
     }
 
     public void printPriceAfterDiscount(int priceBeforeDiscount, int discountPrice) {
-        int differencePrice = max(priceBeforeDiscount + discountPrice, 0);
+        int differencePrice = Math.max(priceBeforeDiscount + discountPrice, 0);
 
         System.out.println(AFTER_DISCOUNT_TITLE);
         System.out.println(PRICE_FORMAT.formatted(DecimalFormatter.format(differencePrice)));
         System.out.println();
     }
 
-    private int max(int firstNumber, int secondNumber) {
-        if (firstNumber > secondNumber) {
-            return firstNumber;
+    public void printEventBadge(int totalDiscountPrice) {
+        String badge = BadgeValue.getBadge(-1 * totalDiscountPrice);
+
+        System.out.println(BADGE_TITLE);
+        if(checkCanNotPrint(badge == null)) {
+            return;
         }
-        return secondNumber;
+        System.out.println(badge);
+        System.out.println();
     }
 
-    private boolean checkCanDiscount(boolean canDiscount) {
-        if (canDiscount) {
+    private boolean checkCanNotPrint(boolean canNotPrint) {
+        if (canNotPrint) {
             System.out.println(NOTHING);
             System.out.println();
             return true;

@@ -20,6 +20,7 @@ public class EventController {
     private DiscountService discountService;
     private EventDate eventDate;
     private int beforeDiscountPrice;
+    private int totalDiscountPrice;
 
     public EventController(InputView inputView, OutputView outputView, OrderService orderService,
                            DiscountService discountService) {
@@ -42,9 +43,11 @@ public class EventController {
 
         calculateDiscounts();
         outputView.printTotalDiscount(discountService.getTotalDiscounts());
-        outputView.printTotalDiscountPrice(discountService.calculateTotalDiscountPrice());
+        totalDiscountPrice = discountService.calculateTotalDiscountPrice();
+        outputView.printTotalDiscountPrice(totalDiscountPrice);
         outputView.printPriceAfterDiscount(beforeDiscountPrice,
                 discountService.calculateTotalDiscountExceptGiveaway());
+        outputView.printEventBadge(totalDiscountPrice);
     }
 
     private void calculateDiscounts() {
