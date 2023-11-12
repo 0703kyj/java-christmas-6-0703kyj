@@ -3,6 +3,8 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.exception.argument.NotValidOrderException;
+import christmas.exception.argument.OrderOnlyDrinkException;
+import christmas.exception.argument.OverOrderCountException;
 import christmas.util.TypeChanger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,14 +45,14 @@ class OrderTest {
     @Test
     @DisplayName("메뉴의 개수는 숫자이외의 값이 입력되면 안된다.")
     void notNumberOrderCountTest() {
-        String input = "양송이스프-일";
+        String input = "양송이수프-일";
 
         assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
                 .isInstanceOf(NotValidOrderException.class);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"양송이스프-1~제로콜라-3", "양송이스프:1,제로콜라:3"})
+    @ValueSource(strings = {"양송이수프-1~제로콜라-3", "양송이수프:1,제로콜라:3"})
     @DisplayName("사용자 입력이 메뉴 형식관 같아야 한다.")
     void notValidFormatTest(String input) {
         assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
@@ -60,7 +62,7 @@ class OrderTest {
     @Test
     @DisplayName("중복 메뉴를 입력하면 안된다.")
     void duplicateMenuTest() {
-        String input = "양송이스프-1,양송이스프-3";
+        String input = "양송이수프-1,양송이수프-3";
 
         assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
                 .isInstanceOf(NotValidOrderException.class);
@@ -73,15 +75,15 @@ class OrderTest {
         order.orderMenu(name, orderCount);
 
         assertThatThrownBy(() -> order.checkOnlyDrink())
-                .isInstanceOf(NotValidOrderException.class);
+                .isInstanceOf(OrderOnlyDrinkException.class);
     }
 
     @Test
     @DisplayName("메뉴 개수가 20가지 초과이면 안된다.")
     void overMaxOrderCountTest() {
-        String input = "양송이스프-1,시저샐러드-3,제로콜라-17";
+        String input = "양송이수프-1,시저샐러드-3,제로콜라-17";
 
         assertThatThrownBy(() -> TypeChanger.toOrder(input, order))
-                .isInstanceOf(NotValidOrderException.class);
+                .isInstanceOf(OverOrderCountException.class);
     }
 }

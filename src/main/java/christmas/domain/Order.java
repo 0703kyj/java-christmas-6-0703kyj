@@ -5,6 +5,8 @@ import christmas.domain.menu.Drink;
 import christmas.domain.menu.MainMenu;
 import christmas.domain.menu.Menu;
 import christmas.exception.argument.NotValidOrderException;
+import christmas.exception.argument.OrderOnlyDrinkException;
+import christmas.exception.argument.OverOrderCountException;
 import christmas.util.MenuInitializer;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +50,7 @@ public class Order {
 
     public void checkOnlyDrink() {
         if (isAllDrinks()) {
-            throw new NotValidOrderException();
+            throw new OrderOnlyDrinkException();
         }
     }
 
@@ -120,7 +122,7 @@ public class Order {
         totalOrderCount += orderCount;
 
         if (totalOrderCount > MAX_ORDER_COUNT) {
-            throw new NotValidOrderException();
+            throw new OverOrderCountException();
         }
     }
 }
