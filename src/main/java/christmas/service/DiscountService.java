@@ -23,7 +23,7 @@ public class DiscountService {
         int discountPrice = 0;
 
         for (Discount discount : discounts) {
-            discountPrice += discount.calculate();
+            discountPrice -= discount.calculate();
         }
         return discountPrice;
     }
@@ -35,7 +35,7 @@ public class DiscountService {
             if(discount instanceof GiveawayDiscount){
                 continue;
             }
-            discountPrice += discount.calculate();
+            discountPrice -= discount.calculate();
         }
         return discountPrice;
     }

@@ -43,7 +43,7 @@ public class EventController {
         calculateDiscounts();
         outputView.printTotalDiscount(discountService.getTotalDiscounts());
         outputView.printTotalDiscountPrice(discountService.calculateTotalDiscountPrice());
-        outputView.printPriceAfterDiscount(orderService.getPriceBeforeDiscount(),
+        outputView.printPriceAfterDiscount(beforeDiscountPrice,
                 discountService.calculateTotalDiscountExceptGiveaway());
     }
 

@@ -16,7 +16,6 @@ public class OutputView {
     private static final String TOTAL_DISCOUNT_PRICE_TITLE = "<총혜택 금액>";
     private static final String AFTER_DISCOUNT_TITLE = "<할인 후 예상 결제 금액>";
     private static final String PRICE_FORMAT = "%s원";
-    private static final String DISCOUNT_FORMAT = "-%s원";
     private static final String NOTHING = "없음";
 
     public OutputView() {
@@ -61,12 +60,12 @@ public class OutputView {
 
     public void printTotalDiscountPrice(int totalDiscountPrice) {
         System.out.println(TOTAL_DISCOUNT_PRICE_TITLE);
-        System.out.println(DISCOUNT_FORMAT.formatted(DecimalFormatter.format(totalDiscountPrice)));
+        System.out.println(PRICE_FORMAT.formatted(DecimalFormatter.format(totalDiscountPrice)));
         System.out.println();
     }
 
-    public void printPriceAfterDiscount(int priceBeforeDiscount, int priceAfterDiscount) {
-        int differencePrice = max(priceBeforeDiscount - priceAfterDiscount, 0);
+    public void printPriceAfterDiscount(int priceBeforeDiscount, int discountPrice) {
+        int differencePrice = max(priceBeforeDiscount + discountPrice, 0);
 
         System.out.println(AFTER_DISCOUNT_TITLE);
         System.out.println(PRICE_FORMAT.formatted(DecimalFormatter.format(differencePrice)));
@@ -92,8 +91,8 @@ public class OutputView {
     private void printDiscounts(List<Discount> totalDiscount) {
         for (Discount discount : totalDiscount) {
             String discountTitle = discount.getTitle();
-            String discountPrice = discount.getDiscountPrice();
-            System.out.println(discountTitle + DISCOUNT_FORMAT.formatted(discountPrice));
+            String discountPrice = DecimalFormatter.format(-1 * discount.getDiscountPrice());
+            System.out.println(discountTitle + PRICE_FORMAT.formatted(discountPrice));
         }
     }
 }
