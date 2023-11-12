@@ -3,7 +3,6 @@ package christmas.service;
 import christmas.domain.Order;
 import christmas.domain.discount.GiveawayDiscount;
 import christmas.domain.menu.Menu;
-import christmas.util.DecimalFormatter;
 import java.util.List;
 
 public class OrderService {
@@ -18,8 +17,8 @@ public class OrderService {
         return order.toString();
     }
 
-    public String getPriceBeforeDiscount() {
-        return DecimalFormatter.format(order.getTotalPrice());
+    public int getPriceBeforeDiscount() {
+        return order.getTotalPrice();
     }
 
     public int getTotalPrice() {

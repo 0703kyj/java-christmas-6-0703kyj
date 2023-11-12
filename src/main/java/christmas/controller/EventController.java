@@ -39,6 +39,8 @@ public class EventController {
         calculateDiscounts();
         outputView.printTotalDiscount(discountService.getTotalDiscounts());
         outputView.printTotalDiscountPrice(discountService.calculateTotalDiscountPrice());
+        outputView.printPriceAfterDiscount(orderService.getPriceBeforeDiscount(),
+                discountService.calculateTotalDiscountExceptGiveaway());
     }
 
     private void calculateDiscounts() {
