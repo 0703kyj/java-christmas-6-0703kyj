@@ -9,9 +9,11 @@ public class SpecialDiscount implements Discount {
     private static final String DISCOUNT_TITLE = "특별 할인";
     private static final String TITLE_SUFFIX = ": ";
     private EventDate eventDate;
+    private int beforeDiscountPrice;
 
-    public SpecialDiscount(EventDate eventDate) {
+    public SpecialDiscount(EventDate eventDate, int beforeDiscountPrice) {
         this.eventDate = eventDate;
+        this.beforeDiscountPrice = beforeDiscountPrice;
     }
 
     @Override
@@ -26,10 +28,11 @@ public class SpecialDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        if (checkDayOfWeek() || checkDate()) {
-            return true;
-        }
-        return false;
+        return (checkDayOfWeek() || checkDate()) && canTriggerEvent();
+    }
+
+    private boolean canTriggerEvent() {
+        return beforeDiscountPrice >= EVENT_TRIGGER;
     }
 
     private boolean checkDate() {

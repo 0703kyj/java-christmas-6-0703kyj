@@ -9,10 +9,12 @@ public class WeekdayDiscount implements Discount {
     private static final String TITLE_SUFFIX = ": ";
     private EventDate eventDate;
     private int menuCount;
+    private int beforeDiscountPrice;
 
-    public WeekdayDiscount(EventDate eventDate, int menuCount) {
+    public WeekdayDiscount(EventDate eventDate, int menuCount, int beforeDiscountPrice) {
         this.eventDate = eventDate;
         this.menuCount = menuCount;
+        this.beforeDiscountPrice = beforeDiscountPrice;
     }
 
     @Override
@@ -27,10 +29,11 @@ public class WeekdayDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        if (checkWeekday() && hasMenu()) {
-            return true;
-        }
-        return false;
+        return checkWeekday() && hasMenu() && canTriggerEvent();
+    }
+
+    private boolean canTriggerEvent() {
+        return beforeDiscountPrice >= EVENT_TRIGGER;
     }
 
     private boolean hasMenu() {

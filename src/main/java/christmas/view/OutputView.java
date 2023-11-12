@@ -53,7 +53,7 @@ public class OutputView {
 
     public void printGiveawayMenu(String giveawayMenu) {
         System.out.println(GIVEAWAY_MENU_TITLE);
-        if (checkCanDiscount(giveawayMenu.isBlank())) {
+        if (checkCanDiscount(giveawayMenu == null || giveawayMenu.isBlank())) {
             return;
         }
         System.out.println(giveawayMenu);
@@ -73,7 +73,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private int max(int firstNumber, int secondNumber){
+    private int max(int firstNumber, int secondNumber) {
         if (firstNumber > secondNumber) {
             return firstNumber;
         }
@@ -83,6 +83,7 @@ public class OutputView {
     private boolean checkCanDiscount(boolean canDiscount) {
         if (canDiscount) {
             System.out.println(NOTHING);
+            System.out.println();
             return true;
         }
         return false;

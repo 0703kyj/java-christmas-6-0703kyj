@@ -19,6 +19,7 @@ public class EventController {
     private OrderService orderService;
     private DiscountService discountService;
     private EventDate eventDate;
+    private int beforeDiscountPrice;
 
     public EventController(InputView inputView, OutputView outputView, OrderService orderService,
                            DiscountService discountService) {
@@ -28,14 +29,17 @@ public class EventController {
         this.discountService = discountService;
     }
 
-    public void run(){
+    public void run() {
         outputView.printInfo();
         input();
 
         outputView.printBenefits(eventDate);
         outputView.printOrderMenu(orderService.printOrder());
-        outputView.printPriceBeforeDiscount(orderService.getPriceBeforeDiscount());
+
+        beforeDiscountPrice = orderService.getPriceBeforeDiscount();
+        outputView.printPriceBeforeDiscount(beforeDiscountPrice);
         outputView.printGiveawayMenu(orderService.getGiveaway());
+
         calculateDiscounts();
         outputView.printTotalDiscount(discountService.getTotalDiscounts());
         outputView.printTotalDiscountPrice(discountService.calculateTotalDiscountPrice());
@@ -53,10 +57,10 @@ public class EventController {
 
     private List<Discount> getDiscounts() {
         return List.of(
-                new DdayDiscount(eventDate),
-                new WeekdayDiscount(eventDate, orderService.getCountOfDesserts()),
-                new WeekendDiscount(eventDate, orderService.getCountOfMainMenus()),
-                new SpecialDiscount(eventDate),
+                new DdayDiscount(eventDate,beforeDiscountPrice),
+                new WeekdayDiscount(eventDate, orderService.getCountOfDesserts(),beforeDiscountPrice),
+                new WeekendDiscount(eventDate, orderService.getCountOfMainMenus(),beforeDiscountPrice),
+                new SpecialDiscount(eventDate,beforeDiscountPrice),
                 new GiveawayDiscount(orderService.getTotalPrice())
         );
     }

@@ -13,9 +13,11 @@ public class DdayDiscount implements Discount {
     private static final EventDate startEventDate = new EventDate(START_DATE);
     private static final EventDate endEventDate = new EventDate(END_DATE);
     private EventDate eventDate;
+    private int beforeDiscountPrice;
 
-    public DdayDiscount(EventDate eventDate) {
+    public DdayDiscount(EventDate eventDate, int beforeDiscountPrice) {
         this.eventDate = eventDate;
+        this.beforeDiscountPrice = beforeDiscountPrice;
     }
 
     @Override
@@ -33,10 +35,11 @@ public class DdayDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        if (calculate() == 0) {
-            return false;
-        }
-        return true;
+        return (calculate() > 0)&&canTriggerEvent();
+    }
+
+    private boolean canTriggerEvent() {
+        return beforeDiscountPrice >= EVENT_TRIGGER;
     }
 
     private int getDiscount(int discountCount) {
