@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class WeekdayDiscountTest {
+    private static final int DISCOUNT_PRICE = 2023;
     private EventDate eventDate;
     private int beforeDiscountPrice;
     private int menuCount;
@@ -26,7 +27,7 @@ class WeekdayDiscountTest {
     void calculate() {
         Discount discount = new WeekdayDiscount(eventDate, menuCount, beforeDiscountPrice);
 
-        Assertions.assertThat(discount.calculate()).isEqualTo(2023*2);
+        Assertions.assertThat(discount.calculate()).isEqualTo(DISCOUNT_PRICE*menuCount);
     }
 
     @ParameterizedTest
