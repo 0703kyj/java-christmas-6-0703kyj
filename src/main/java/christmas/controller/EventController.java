@@ -37,14 +37,16 @@ public class EventController {
     public void run() {
         outputView.printInfo();
         input();
-
-        beforeDiscountPrice = orderService.getPriceBeforeDiscount();
         calculateDiscounts();
+        output();
+    }
+
+    private void calculateDiscounts() {
+        beforeDiscountPrice = orderService.getPriceBeforeDiscount();
+        setDiscounts();
         giveawayMenu = discountService.calculateGiveaway();
         totalDiscountPrice = discountService.calculateTotalDiscountPrice();
         totalDiscountPriceExpectGiveaway = discountService.calculateTotalDiscountExceptGiveaway();
-
-        output();
     }
 
     private void input() {
@@ -63,11 +65,11 @@ public class EventController {
         outputView.printEventBadge(totalDiscountPrice);
     }
 
-    private void calculateDiscounts() {
+    private void setDiscounts() {
         List<Discount> discounts = getDiscounts();
 
         for (Discount discount : discounts) {
-            discountService.calculateDiscount(discount);
+            discountService.setDiscount(discount);
         }
     }
 

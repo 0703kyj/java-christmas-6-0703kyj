@@ -40,7 +40,7 @@ public class DiscountService {
         return discountPrice;
     }
 
-    public void calculateDiscount(Discount discount) {
+    public void setDiscount(Discount discount) {
 
         if (!discount.canDiscount()) {
             return;
