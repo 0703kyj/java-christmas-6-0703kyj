@@ -1,6 +1,7 @@
 package christmas.domain.discount;
 
 import christmas.domain.EventDate;
+import christmas.exception.state.NotFoundEventDateException;
 
 public class DdayDiscount implements Discount {
     private static final int START_DATE = 1;
@@ -47,11 +48,19 @@ public class DdayDiscount implements Discount {
     }
 
     private int calculateCount() {
-        return (eventDate.getDifference(startEventDate));
+        try{
+            return (eventDate.getDifference(startEventDate));
+        }catch(NullPointerException exception){
+            throw new NotFoundEventDateException();
+        }
     }
 
     private boolean isNotDdayEvent() {
-        return isEndDdayEvent() || !isStartDdayEvent();
+        try{
+            return isEndDdayEvent() || !isStartDdayEvent();
+        }catch(NullPointerException exception){
+            throw new NotFoundEventDateException();
+        }
     }
 
     private boolean isStartDdayEvent() {

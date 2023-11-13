@@ -28,25 +28,39 @@ public class EventController {
         this.outputView = outputView;
         this.orderService = orderService;
         this.discountService = discountService;
+        this.beforeDiscountPrice = 0;
+        this.totalDiscountPrice = 0;
     }
 
     public void run() {
         outputView.printInfo();
         input();
 
+        try{
+            output();
+        }catch(IllegalStateException exception){
+            System.out.println(exception);
+        }
+    }
+
+    private void output() {
         outputView.printBenefits(eventDate);
         outputView.printOrderMenu(orderService.printOrder());
 
         beforeDiscountPrice = orderService.getPriceBeforeDiscount();
         outputView.printPriceBeforeDiscount(beforeDiscountPrice);
+
         outputView.printGiveawayMenu(orderService.getGiveaway());
 
         calculateDiscounts();
         outputView.printTotalDiscount(discountService.getTotalDiscounts());
+
         totalDiscountPrice = discountService.calculateTotalDiscountPrice();
         outputView.printTotalDiscountPrice(totalDiscountPrice);
+
         outputView.printPriceAfterDiscount(beforeDiscountPrice,
                 discountService.calculateTotalDiscountExceptGiveaway());
+
         outputView.printEventBadge(totalDiscountPrice);
     }
 

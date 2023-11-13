@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.domain.EventDate;
 import christmas.domain.discount.Discount;
+import christmas.exception.state.NotFoundEventDateException;
 import christmas.resource.BadgeValue;
 import christmas.resource.DateValue;
 import christmas.util.DecimalFormatter;
@@ -28,11 +29,19 @@ public class OutputView {
     }
 
     public void printBenefits(EventDate eventDate) {
-        System.out.println(BENEFITS_TITLE.formatted(eventDate.getDay()));
+        try{
+            System.out.println(BENEFITS_TITLE.formatted(eventDate.getDay()));
+        }catch (NullPointerException exception){
+            throw new NotFoundEventDateException();
+        }
     }
 
     public void printOrderMenu(String order) {
         System.out.println(ORDER_MENU_TITLE);
+
+        if (checkCanNotPrint(order.isBlank())) {
+            return;
+        }
         System.out.println(order);
     }
 

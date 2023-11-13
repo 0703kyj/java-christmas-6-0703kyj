@@ -1,6 +1,7 @@
 package christmas.domain.discount;
 
 import christmas.domain.EventDate;
+import christmas.exception.state.NotFoundEventDateException;
 import christmas.resource.discount.WeekendValue;
 
 public class WeekendDiscount implements Discount {
@@ -29,7 +30,11 @@ public class WeekendDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        return checkWeekend() && hasMenu() && canTriggerEvent();
+        try {
+            return checkWeekend() && hasMenu() && canTriggerEvent();
+        } catch (NullPointerException exception) {
+            throw new NotFoundEventDateException();
+        }
     }
 
     private boolean canTriggerEvent() {
