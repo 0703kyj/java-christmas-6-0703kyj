@@ -19,10 +19,13 @@ public class EventController {
     private OrderService orderService;
     private DiscountService discountService;
     private EventDate eventDate;
+    private String orderMenu;
     private int beforeDiscountPrice;
     private String giveawayMenu;
+    private List<Discount> totalDiscounts;
     private int totalDiscountPrice;
     private int totalDiscountPriceExpectGiveaway;
+    private String badge;
 
     public EventController(InputView inputView, OutputView outputView, OrderService orderService,
                            DiscountService discountService) {
@@ -42,11 +45,14 @@ public class EventController {
     }
 
     private void calculateDiscounts() {
+        orderMenu = orderService.printOrder();
         beforeDiscountPrice = orderService.getPriceBeforeDiscount();
         setDiscounts();
         giveawayMenu = discountService.calculateGiveaway();
+        totalDiscounts = discountService.getTotalDiscounts();
         totalDiscountPrice = discountService.calculateTotalDiscountPrice();
         totalDiscountPriceExpectGiveaway = discountService.calculateTotalDiscountExceptGiveaway();
+        badge = orderService.getBadge(totalDiscountPrice);
     }
 
     private void input() {
@@ -56,13 +62,13 @@ public class EventController {
 
     private void output() {
         outputView.printBenefits(eventDate);
-        outputView.printOrderMenu(orderService.printOrder());
+        outputView.printOrderMenu(orderMenu);
         outputView.printPriceBeforeDiscount(beforeDiscountPrice);
         outputView.printGiveawayMenu(giveawayMenu);
-        outputView.printTotalDiscount(discountService.getTotalDiscounts());
+        outputView.printTotalDiscount(totalDiscounts);
         outputView.printTotalDiscountPrice(totalDiscountPrice);
         outputView.printPriceAfterDiscount(beforeDiscountPrice,totalDiscountPriceExpectGiveaway);
-        outputView.printEventBadge(totalDiscountPrice);
+        outputView.printEventBadge(badge);
     }
 
     private void setDiscounts() {

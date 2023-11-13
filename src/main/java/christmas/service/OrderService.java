@@ -3,6 +3,7 @@ package christmas.service;
 import christmas.domain.Order;
 import christmas.domain.menu.Menu;
 import christmas.exception.state.NotFoundOrderException;
+import christmas.resource.BadgeValue;
 import java.util.List;
 
 public class OrderService {
@@ -54,5 +55,9 @@ public class OrderService {
         if (!order.isCustomerOrdered()) {
             throw new NotFoundOrderException();
         }
+    }
+
+    public String getBadge(int totalDiscountPrice) {
+        return BadgeValue.getBadge(-1 * totalDiscountPrice);
     }
 }

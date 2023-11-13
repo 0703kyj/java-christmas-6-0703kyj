@@ -3,7 +3,6 @@ package christmas.view;
 import christmas.domain.EventDate;
 import christmas.domain.discount.Discount;
 import christmas.exception.state.NotFoundEventDateException;
-import christmas.resource.BadgeValue;
 import christmas.resource.DateValue;
 import christmas.util.DecimalFormatter;
 import java.util.List;
@@ -83,8 +82,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printEventBadge(int totalDiscountPrice) {
-        String badge = BadgeValue.getBadge(-1 * totalDiscountPrice);
+    public void printEventBadge(String badge) {
 
         System.out.println(BADGE_TITLE);
         if(checkCanNotPrint(badge == null)) {
