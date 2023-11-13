@@ -4,6 +4,7 @@ import christmas.domain.EventDate;
 import christmas.exception.state.NotFoundEventDateException;
 import christmas.resource.discount.SpecialDateValue;
 import christmas.resource.discount.SpecialDayOfWeekValue;
+import christmas.util.EventTrigger;
 
 public class SpecialDiscount implements Discount {
     private static final int DISCOUNT_PRICE = 1000;
@@ -29,15 +30,11 @@ public class SpecialDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        try{
-            return (checkDayOfWeek() || checkDate()) && canTriggerEvent();
-        }catch (NullPointerException exception) {
+        try {
+            return (checkDayOfWeek() || checkDate()) && EventTrigger.canTrigger(beforeDiscountPrice);
+        } catch (NullPointerException exception) {
             throw new NotFoundEventDateException();
         }
-    }
-
-    private boolean canTriggerEvent() {
-        return beforeDiscountPrice >= EVENT_TRIGGER;
     }
 
     private boolean checkDate() {

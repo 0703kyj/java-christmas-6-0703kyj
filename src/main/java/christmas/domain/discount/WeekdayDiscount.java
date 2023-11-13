@@ -3,6 +3,7 @@ package christmas.domain.discount;
 import christmas.domain.EventDate;
 import christmas.exception.state.NotFoundEventDateException;
 import christmas.resource.discount.WeekdayValue;
+import christmas.util.EventTrigger;
 
 public class WeekdayDiscount implements Discount {
     private static final int DISCOUNT_PRICE = 2023;
@@ -31,14 +32,10 @@ public class WeekdayDiscount implements Discount {
     @Override
     public boolean canDiscount() {
         try {
-            return checkWeekday() && hasMenu() && canTriggerEvent();
+            return checkWeekday() && hasMenu() && EventTrigger.canTrigger(beforeDiscountPrice);
         } catch (NullPointerException exception) {
             throw new NotFoundEventDateException();
         }
-    }
-
-    private boolean canTriggerEvent() {
-        return beforeDiscountPrice >= EVENT_TRIGGER;
     }
 
     private boolean hasMenu() {

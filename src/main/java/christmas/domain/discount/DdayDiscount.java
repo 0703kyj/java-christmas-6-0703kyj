@@ -2,6 +2,7 @@ package christmas.domain.discount;
 
 import christmas.domain.EventDate;
 import christmas.exception.state.NotFoundEventDateException;
+import christmas.util.EventTrigger;
 
 public class DdayDiscount implements Discount {
     private static final int START_DATE = 1;
@@ -36,11 +37,7 @@ public class DdayDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        return (calculate() > 0)&&canTriggerEvent();
-    }
-
-    private boolean canTriggerEvent() {
-        return beforeDiscountPrice >= EVENT_TRIGGER;
+        return (calculate() > 0) && EventTrigger.canTrigger(beforeDiscountPrice);
     }
 
     private int getDiscount(int discountCount) {
@@ -48,17 +45,17 @@ public class DdayDiscount implements Discount {
     }
 
     private int calculateCount() {
-        try{
+        try {
             return (eventDate.getDifference(startEventDate));
-        }catch(NullPointerException exception){
+        } catch (NullPointerException exception) {
             throw new NotFoundEventDateException();
         }
     }
 
     private boolean isNotDdayEvent() {
-        try{
+        try {
             return isEndDdayEvent() || !isStartDdayEvent();
-        }catch(NullPointerException exception){
+        } catch (NullPointerException exception) {
             throw new NotFoundEventDateException();
         }
     }

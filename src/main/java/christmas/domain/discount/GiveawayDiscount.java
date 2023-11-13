@@ -4,6 +4,7 @@ import christmas.domain.menu.Drink;
 import christmas.domain.menu.Menu;
 import christmas.resource.menu.DrinkValue;
 import christmas.resource.menu.MenuValue;
+import christmas.util.EventTrigger;
 
 public class GiveawayDiscount implements Discount {
 
@@ -39,14 +40,10 @@ public class GiveawayDiscount implements Discount {
 
     @Override
     public boolean canDiscount() {
-        return isOverGiveawayPrice() && canTriggerEvent();
+        return isOverGiveawayPrice() && EventTrigger.canTrigger(beforeDiscountPrice);
     }
 
     private boolean isOverGiveawayPrice() {
         return beforeDiscountPrice > GIVEAWAY_PRICE;
-    }
-
-    private boolean canTriggerEvent() {
-        return beforeDiscountPrice >= EVENT_TRIGGER;
     }
 }
