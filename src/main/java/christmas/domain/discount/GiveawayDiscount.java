@@ -44,6 +44,6 @@ public class GiveawayDiscount implements Discount {
     }
 
     private boolean isOverGiveawayPrice() {
-        return beforeDiscountPrice > GIVEAWAY_PRICE;
+        return beforeDiscountPrice >= GIVEAWAY_PRICE;
     }
 }

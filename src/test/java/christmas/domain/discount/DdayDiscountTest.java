@@ -43,10 +43,9 @@ class DdayDiscountTest {
 
         if (day <= 25) {
             assertTrue(discount.canDiscount());
+            return;
         }
-        if (day > 25) {
-            assertFalse(discount.canDiscount());
-        }
+        assertFalse(discount.canDiscount());
     }
 
     @Test
