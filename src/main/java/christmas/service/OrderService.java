@@ -1,8 +1,8 @@
 package christmas.service;
 
 import christmas.domain.Order;
-import christmas.domain.discount.GiveawayDiscount;
 import christmas.domain.menu.Menu;
+import christmas.exception.state.NotFoundOrderException;
 import java.util.List;
 
 public class OrderService {
@@ -14,24 +14,24 @@ public class OrderService {
     }
 
     public String printOrder() {
+        checkCustomerOrdered();
         return order.toString();
     }
 
     public int getPriceBeforeDiscount() {
+        checkCustomerOrdered();
         return order.getTotalPrice();
     }
 
     public int getTotalPrice() {
+        checkCustomerOrdered();
         return order.getTotalPrice();
-    }
-
-    public String getGiveaway() {
-        GiveawayDiscount giveawayDiscount = new GiveawayDiscount(order.getTotalPrice());
-        return giveawayDiscount.getGiveaway();
     }
 
     public int getCountOfDesserts(){
         int count = 0;
+
+        checkCustomerOrdered();
         List<Menu> desserts = order.getDesserts();
         for (Menu dessert : desserts) {
             count += dessert.getOrderCount();
@@ -41,10 +41,18 @@ public class OrderService {
 
     public int getCountOfMainMenus(){
         int count = 0;
+
+        checkCustomerOrdered();
         List<Menu> mainMenus = order.getMainMenus();
         for (Menu mainMenu : mainMenus) {
             count += mainMenu.getOrderCount();
         }
         return count;
+    }
+
+    private void checkCustomerOrdered(){
+        if (!order.isCustomerOrdered()) {
+            throw new NotFoundOrderException();
+        }
     }
 }
