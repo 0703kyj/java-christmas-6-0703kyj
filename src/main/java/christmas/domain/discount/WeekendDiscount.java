@@ -8,7 +8,6 @@ import christmas.util.EventTrigger;
 public class WeekendDiscount implements Discount {
     private static final int DISCOUNT_PRICE = 2023;
     private static final String DISCOUNT_TITLE = "주말 할인";
-    private static final String TITLE_SUFFIX = ": ";
     private EventDate eventDate;
     private int menuCount;
     private int beforeDiscountPrice;

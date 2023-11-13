@@ -11,7 +11,6 @@ public class GiveawayDiscount implements Discount {
     private static final int GIVEAWAY_PRICE = 120000;
     private static final int GIVEAWAY_COUNT = 1;
     private static final String DISCOUNT_TITLE = "증정 이벤트";
-    private static final String TITLE_SUFFIX = ": ";
     private static final MenuValue GIVEAWAY = DrinkValue.CHAMPAGNE;
     private static final Menu giveawayMenu = new Drink(GIVEAWAY.getName(), GIVEAWAY.getPrice());
     private final int beforeDiscountPrice;
