@@ -13,8 +13,8 @@ public class DdayDiscount implements Discount {
     private static final String DISCOUNT_TITLE = "크리스마스 디데이 할인";
     private static final EventDate startEventDate = new EventDate(START_DATE);
     private static final EventDate endEventDate = new EventDate(END_DATE);
-    private EventDate eventDate;
-    private int beforeDiscountPrice;
+    private final EventDate eventDate;
+    private final int beforeDiscountPrice;
 
     public DdayDiscount(EventDate eventDate, int beforeDiscountPrice) {
         this.eventDate = eventDate;

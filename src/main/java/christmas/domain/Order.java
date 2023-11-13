@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class Order {
     private static final int MAX_ORDER_COUNT = 20;
     private List<Menu> totalMenu;
-    private int totalOrderCount;
+    private static int totalOrderCount;
 
-    public Order(){
+    public Order() {
         init();
     }
 
@@ -28,11 +28,14 @@ public class Order {
 
     public void orderMenu(String name, int orderCount) {
         validateOrder(name, orderCount);
+        addOrderCount(orderCount);
 
         findMenu(name)
                 .ifPresentOrElse(
                         menu -> menu.order(orderCount),
-                        () -> { throw new NotValidOrderException(); }
+                        () -> {
+                            throw new NotValidOrderException();
+                        }
                 );
     }
 
@@ -54,22 +57,26 @@ public class Order {
         }
     }
 
-    public int getTotalPrice(){
+    public int getTotalPrice() {
         int totalPrice = 0;
 
         for (Menu menu : totalMenu) {
-            if(menu.isOrdered()){
+            if (menu.isOrdered()) {
                 totalPrice += menu.getPrice();
             }
         }
         return totalPrice;
     }
 
+    public boolean isCustomerOrdered() {
+        return totalOrderCount > 0;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Menu menu : totalMenu) {
-            if(menu.isOrdered()){
+            if (menu.isOrdered()) {
                 result.append(menu);
             }
         }
@@ -94,7 +101,7 @@ public class Order {
                 .findFirst();
     }
 
-    private void validateOrder(String name, int orderCount){
+    private void validateOrder(String name, int orderCount) {
         validateDuplicate(name);
         validateOrderCount(orderCount);
     }
@@ -103,7 +110,9 @@ public class Order {
         findMenu(name)
                 .ifPresentOrElse(
                         menu -> checkOrdered(menu),
-                        () -> { throw new NotValidOrderException(); }
+                        () -> {
+                            throw new NotValidOrderException();
+                        }
                 );
     }
 
@@ -119,10 +128,12 @@ public class Order {
     }
 
     private void validateOverMax(int orderCount) {
-        totalOrderCount += orderCount;
-
-        if (totalOrderCount > MAX_ORDER_COUNT) {
+        if (totalOrderCount + orderCount > MAX_ORDER_COUNT) {
             throw new OverOrderCountException();
         }
+    }
+
+    private void addOrderCount(int orderCount) {
+        totalOrderCount += orderCount;
     }
 }

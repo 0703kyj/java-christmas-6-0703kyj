@@ -20,7 +20,9 @@ public class EventController {
     private DiscountService discountService;
     private EventDate eventDate;
     private int beforeDiscountPrice;
+    private String giveawayMenu;
     private int totalDiscountPrice;
+    private int totalDiscountPriceExpectGiveaway;
 
     public EventController(InputView inputView, OutputView outputView, OrderService orderService,
                            DiscountService discountService) {
@@ -36,31 +38,28 @@ public class EventController {
         outputView.printInfo();
         input();
 
-        try{
-            output();
-        }catch(IllegalStateException exception){
-            System.out.println(exception);
-        }
+        beforeDiscountPrice = orderService.getPriceBeforeDiscount();
+        calculateDiscounts();
+        giveawayMenu = discountService.calculateGiveaway();
+        totalDiscountPrice = discountService.calculateTotalDiscountPrice();
+        totalDiscountPriceExpectGiveaway = discountService.calculateTotalDiscountExceptGiveaway();
+
+        output();
+    }
+
+    private void input() {
+        eventDate = inputView.readVisitDate();
+        inputView.readOrder();
     }
 
     private void output() {
         outputView.printBenefits(eventDate);
         outputView.printOrderMenu(orderService.printOrder());
-
-        beforeDiscountPrice = orderService.getPriceBeforeDiscount();
         outputView.printPriceBeforeDiscount(beforeDiscountPrice);
-
-        outputView.printGiveawayMenu(orderService.getGiveaway());
-
-        calculateDiscounts();
+        outputView.printGiveawayMenu(giveawayMenu);
         outputView.printTotalDiscount(discountService.getTotalDiscounts());
-
-        totalDiscountPrice = discountService.calculateTotalDiscountPrice();
         outputView.printTotalDiscountPrice(totalDiscountPrice);
-
-        outputView.printPriceAfterDiscount(beforeDiscountPrice,
-                discountService.calculateTotalDiscountExceptGiveaway());
-
+        outputView.printPriceAfterDiscount(beforeDiscountPrice,totalDiscountPriceExpectGiveaway);
         outputView.printEventBadge(totalDiscountPrice);
     }
 
@@ -80,10 +79,5 @@ public class EventController {
                 new SpecialDiscount(eventDate,beforeDiscountPrice),
                 new GiveawayDiscount(orderService.getTotalPrice())
         );
-    }
-
-    private void input() {
-        eventDate = inputView.readVisitDate();
-        inputView.readOrder();
     }
 }

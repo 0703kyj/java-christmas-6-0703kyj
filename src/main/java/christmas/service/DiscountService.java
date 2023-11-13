@@ -47,4 +47,22 @@ public class DiscountService {
         }
         discounts.add(discount);
     }
+
+    public String calculateGiveaway() {
+        GiveawayDiscount giveawayDiscount = findGiveaway();
+
+        if (giveawayDiscount == null) {
+            return null;
+        }
+        return giveawayDiscount.getGiveaway();
+    }
+
+    private GiveawayDiscount findGiveaway() {
+        for (Discount discount : discounts) {
+            if (discount instanceof GiveawayDiscount) {
+                return (GiveawayDiscount)discount;
+            }
+        }
+        return null;
+    }
 }

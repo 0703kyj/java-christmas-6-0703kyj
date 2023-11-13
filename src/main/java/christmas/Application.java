@@ -6,7 +6,11 @@ import christmas.controller.EventController;
 public class Application {
 
     public static void main(String[] args) {
-        EventController eventController = EventConfig.getEventController();
-        eventController.run();
+        try {
+            EventController eventController = EventConfig.getEventController();
+            eventController.run();
+        }catch(IllegalStateException exception){
+            System.out.println(exception);
+        }
     }
 }

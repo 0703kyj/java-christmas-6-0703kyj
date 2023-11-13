@@ -9,8 +9,8 @@ public class WeekendDiscount implements Discount {
     private static final int DISCOUNT_PRICE = 2023;
     private static final String DISCOUNT_TITLE = "주말 할인";
     private EventDate eventDate;
-    private int menuCount;
-    private int beforeDiscountPrice;
+    private final int menuCount;
+    private final int beforeDiscountPrice;
 
     public WeekendDiscount(EventDate eventDate, int menuCount, int beforeDiscountPrice) {
         this.eventDate = eventDate;
