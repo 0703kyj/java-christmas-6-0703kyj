@@ -32,8 +32,8 @@ class DiscountServiceTest {
             "'티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1',-29046,26",
             "'타파스-1,제로콜라-1',0,3"
     })
-    @DisplayName("할인 전 금액이 정확하게 계산되어야 합니다.")
-    void beforeDiscountPriceTest(String input, int price, int day) {
+    @DisplayName("총 혜택 금액이 정확하게 계산되어야 합니다.")
+    void calculateTotalDiscountPriceTest(String input, int price, int day) {
         //given
         EventDate eventDate = new EventDate(day);
         TypeChanger.toOrder(input, order);
@@ -42,5 +42,23 @@ class DiscountServiceTest {
         int totalDiscountPrice = discountService.calculateTotalDiscountPrice();
         //then
         assertThat(totalDiscountPrice).isEqualTo(price);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1',-6246,3",
+            "'티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1',-4046,26",
+            "'타파스-1,제로콜라-1',0,3"
+    })
+    @DisplayName("증정 메뉴 가격을 제외한 할인 가격이 정확하게 계산되어야 합니다.")
+    void calculateTotalDiscountExceptGiveawayTest(String input, int price, int day) {
+        //given
+        EventDate eventDate = new EventDate(day);
+        TypeChanger.toOrder(input, order);
+        eventCalculator.calculateDiscounts(eventDate);
+        //when
+        int totalDiscountPriceExceptGiveaway = discountService.calculateTotalDiscountExceptGiveaway();
+        //then
+        assertThat(totalDiscountPriceExceptGiveaway).isEqualTo(price);
     }
 }
