@@ -50,6 +50,18 @@ class OrderServiceTest {
     }
 
     @ParameterizedTest
+    @CsvSource({"'티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1',2", "'타파스-1,제로콜라-1',0"})
+    @DisplayName("메뉴 중 메인 메뉴 개수만 반환합니다.")
+    void getCountOfMainMenusTest(String input, int count) {
+        //given
+        TypeChanger.toOrder(input, order);
+        //when
+        int countOfMainMenus = orderService.getCountOfMainMenus();
+        //then
+        assertThat(countOfMainMenus).isEqualTo(count);
+    }
+
+    @ParameterizedTest
     @ValueSource(ints = {-1000, -2000, -3000, -4000, -4999})
     @DisplayName("5000원 이상은 별 뱃지 부여한다.")
     void noBadgeTest(int totalPrice) {
