@@ -12,8 +12,10 @@ import christmas.domain.discount.WeekdayDiscount;
 import christmas.domain.discount.WeekendDiscount;
 import christmas.util.TypeChanger;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -154,5 +156,28 @@ class DiscountServiceTest {
 
         List<Discount> totalDiscounts = discountService.getTotalDiscounts();
         assertThat(totalDiscounts.size()).isEqualTo(count);
+    }
+
+    @Test
+    @DisplayName("증정 메뉴는 할인 전 금액 120000원 이상에서 제공합니다.")
+    void canGiveGiveawayTest() {
+        int beforeDiscountPrice = 120000;
+        String giveaway = "샴페인 1개\n";
+        GiveawayDiscount giveawayDiscount = new GiveawayDiscount(beforeDiscountPrice);
+
+        discountService.setDiscount(giveawayDiscount);
+
+        assertThat(discountService.calculateGiveaway()).isEqualTo(giveaway);
+    }
+
+    @Test
+    @DisplayName("증정 메뉴는 할인 전 금액 120000원 미만이면 제공되지 않습니다.")
+    void cannotGiveGiveawayTest() {
+        int beforeDiscountPrice = 119000;
+        GiveawayDiscount giveawayDiscount = new GiveawayDiscount(beforeDiscountPrice);
+
+        discountService.setDiscount(giveawayDiscount);
+
+        Assertions.assertNull(discountService.calculateGiveaway());
     }
 }
