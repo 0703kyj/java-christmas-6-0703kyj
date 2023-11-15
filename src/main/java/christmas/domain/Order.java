@@ -8,6 +8,7 @@ import christmas.exception.argument.NotValidOrderException;
 import christmas.exception.argument.OrderOnlyDrinkException;
 import christmas.exception.argument.OverOrderCountException;
 import christmas.util.MenuInitializer;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,15 +42,15 @@ public class Order {
     }
 
     public List<Menu> getMainMenus() {
-        return totalMenu.stream()
+        return Collections.unmodifiableList(totalMenu.stream()
                 .filter(menu -> menu instanceof MainMenu)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public List<Menu> getDesserts() {
-        return totalMenu.stream()
+        return Collections.unmodifiableList(totalMenu.stream()
                 .filter(menu -> menu instanceof Dessert)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public void checkOnlyDrink() {

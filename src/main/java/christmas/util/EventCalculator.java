@@ -9,6 +9,7 @@ import christmas.domain.discount.WeekdayDiscount;
 import christmas.domain.discount.WeekendDiscount;
 import christmas.service.DiscountService;
 import christmas.service.OrderService;
+import java.util.Collections;
 import java.util.List;
 
 public class EventCalculator {
@@ -51,7 +52,7 @@ public class EventCalculator {
     }
 
     public List<Discount> getTotalDiscounts() {
-        return totalDiscounts;
+        return Collections.unmodifiableList(totalDiscounts);
     }
 
     public int getTotalDiscountPrice() {
