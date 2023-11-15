@@ -9,7 +9,7 @@ public class Application {
         try {
             EventController eventController = EventConfig.getEventController();
             eventController.run();
-        }catch(IllegalStateException exception){
+        } catch (IllegalStateException exception) {
             System.out.println(exception);
         }
     }

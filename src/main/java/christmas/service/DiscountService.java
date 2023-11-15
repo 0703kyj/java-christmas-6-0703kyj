@@ -19,7 +19,7 @@ public class DiscountService {
         return discounts;
     }
 
-    public int calculateTotalDiscountPrice(){
+    public int calculateTotalDiscountPrice() {
         int discountPrice = 0;
 
         for (Discount discount : discounts) {
@@ -28,11 +28,11 @@ public class DiscountService {
         return discountPrice;
     }
 
-    public int calculateTotalDiscountExceptGiveaway(){
+    public int calculateTotalDiscountExceptGiveaway() {
         int discountPrice = 0;
 
         for (Discount discount : discounts) {
-            if(discount instanceof GiveawayDiscount){
+            if (discount instanceof GiveawayDiscount) {
                 continue;
             }
             discountPrice -= discount.calculate();
@@ -60,7 +60,7 @@ public class DiscountService {
     private GiveawayDiscount findGiveaway() {
         for (Discount discount : discounts) {
             if (discount instanceof GiveawayDiscount) {
-                return (GiveawayDiscount)discount;
+                return (GiveawayDiscount) discount;
             }
         }
         return null;

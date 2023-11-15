@@ -6,7 +6,7 @@ public class EventStateException extends IllegalStateException implements EventE
     private final String message;
 
     public EventStateException(String message) {
-        this.message = PREFIX+message;
+        this.message = PREFIX + message;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package christmas.service;
+package christmas.util;
 
 import christmas.domain.EventDate;
 import christmas.domain.discount.DdayDiscount;
@@ -7,6 +7,8 @@ import christmas.domain.discount.GiveawayDiscount;
 import christmas.domain.discount.SpecialDiscount;
 import christmas.domain.discount.WeekdayDiscount;
 import christmas.domain.discount.WeekendDiscount;
+import christmas.service.DiscountService;
+import christmas.service.OrderService;
 import java.util.List;
 
 public class EventCalculator {
@@ -74,10 +76,10 @@ public class EventCalculator {
 
     private List<Discount> getDiscounts(EventDate eventDate) {
         return List.of(
-                new DdayDiscount(eventDate,beforeDiscountPrice),
-                new WeekdayDiscount(eventDate, orderService.getCountOfDesserts(),beforeDiscountPrice),
-                new WeekendDiscount(eventDate, orderService.getCountOfMainMenus(),beforeDiscountPrice),
-                new SpecialDiscount(eventDate,beforeDiscountPrice),
+                new DdayDiscount(eventDate, beforeDiscountPrice),
+                new WeekdayDiscount(eventDate, orderService.getCountOfDesserts(), beforeDiscountPrice),
+                new WeekendDiscount(eventDate, orderService.getCountOfMainMenus(), beforeDiscountPrice),
+                new SpecialDiscount(eventDate, beforeDiscountPrice),
                 new GiveawayDiscount(beforeDiscountPrice)
         );
     }

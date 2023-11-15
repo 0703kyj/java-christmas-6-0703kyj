@@ -24,9 +24,9 @@ class DdayDiscountTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"1,1000","4,1300","25,3400","26,0"})
+    @CsvSource({"1,1000", "4,1300", "25,3400", "26,0"})
     @DisplayName("디데이 할인은 1일부터 25일까지 하루가 지날수록 100원씩 증가합니다.")
-    void calculate(int day,int result) {
+    void calculate(int day, int result) {
         eventDate = new EventDate(day);
         Discount discount = new DdayDiscount(eventDate, beforeDiscountPrice);
         int discountPrice = discount.calculate();

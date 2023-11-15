@@ -3,7 +3,7 @@ package christmas.config;
 import christmas.controller.EventController;
 import christmas.domain.Order;
 import christmas.service.DiscountService;
-import christmas.service.EventCalculator;
+import christmas.util.EventCalculator;
 import christmas.service.OrderService;
 import christmas.view.InputView;
 import christmas.view.OutputView;

@@ -6,7 +6,7 @@ public class EventArgumentException extends IllegalArgumentException implements 
     private final String message;
 
     public EventArgumentException(String message) {
-        this.message = PREFIX+message;
+        this.message = PREFIX + message;
     }
 
     @Override

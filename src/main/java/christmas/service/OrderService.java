@@ -24,7 +24,7 @@ public class OrderService {
         return order.getTotalPrice();
     }
 
-    public int getCountOfDesserts(){
+    public int getCountOfDesserts() {
         int count = 0;
 
         checkCustomerOrdered();
@@ -35,7 +35,7 @@ public class OrderService {
         return count;
     }
 
-    public int getCountOfMainMenus(){
+    public int getCountOfMainMenus() {
         int count = 0;
 
         checkCustomerOrdered();
@@ -50,7 +50,7 @@ public class OrderService {
         return BadgeValue.getBadge(-1 * totalDiscountPrice);
     }
 
-    private void checkCustomerOrdered(){
+    private void checkCustomerOrdered() {
         if (!order.isCustomerOrdered()) {
             throw new NotFoundOrderException();
         }

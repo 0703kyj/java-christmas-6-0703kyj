@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class MenuInitializer {
 
     private static List<Menu> totalMenu = new ArrayList<>();
-    private static Map<List<MenuValue>,Function<MenuValue, Menu>> menuTypes = Map.ofEntries(
+    private static Map<List<MenuValue>, Function<MenuValue, Menu>> menuTypes = Map.ofEntries(
             Map.entry(List.of(AppetizerValue.values()),
                     value -> new Appetizer(value.getName(), value.getPrice())),
             Map.entry(List.of(MainMenuValue.values()),
@@ -29,11 +29,11 @@ public class MenuInitializer {
                     value -> new Drink(value.getName(), value.getPrice()))
     );
 
-    public static List<Menu> initMenu(){
+    public static List<Menu> initMenu() {
         totalMenu.clear();
 
         for (List<MenuValue> menuValues : menuTypes.keySet()) {
-            setMenu(menuValues,menuTypes.get(menuValues));
+            setMenu(menuValues, menuTypes.get(menuValues));
         }
         return totalMenu;
     }

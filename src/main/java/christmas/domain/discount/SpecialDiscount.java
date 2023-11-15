@@ -9,6 +9,7 @@ import christmas.util.EventTrigger;
 public class SpecialDiscount implements Discount {
     private static final int DISCOUNT_PRICE = 1000;
     private static final String DISCOUNT_TITLE = "특별 할인";
+
     private final EventDate eventDate;
     private final int beforeDiscountPrice;
 

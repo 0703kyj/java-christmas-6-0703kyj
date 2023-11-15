@@ -1,7 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.EventDate;
-import christmas.service.EventCalculator;
+import christmas.util.EventCalculator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 

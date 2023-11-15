@@ -37,7 +37,7 @@ class SpecialDiscountTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1,2,4,5,6,7})
+    @ValueSource(ints = {1, 2, 4, 5, 6, 7})
     @DisplayName("특별할인은 일요일이 아니면 적용되지 않습니다.")
     void checkNotSundayTest(int day) {
         eventDate = new EventDate(day);

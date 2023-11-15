@@ -27,11 +27,11 @@ class WeekdayDiscountTest {
     void calculate() {
         Discount discount = new WeekdayDiscount(eventDate, menuCount, beforeDiscountPrice);
 
-        Assertions.assertThat(discount.calculate()).isEqualTo(DISCOUNT_PRICE*menuCount);
+        Assertions.assertThat(discount.calculate()).isEqualTo(DISCOUNT_PRICE * menuCount);
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {3,4,5,6,7})
+    @ValueSource(ints = {3, 4, 5, 6, 7})
     @DisplayName("평일할인은 일,월,화,수,목에 적용됩니다.")
     void checkWeekdayTest(int day) {
         eventDate = new EventDate(day);
@@ -41,7 +41,7 @@ class WeekdayDiscountTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {8,9})
+    @ValueSource(ints = {8, 9})
     @DisplayName("평일할인은 금,토에는 적용되지 않습니다.")
     void checkNotWeekdayTest(int day) {
         eventDate = new EventDate(day);
@@ -51,7 +51,7 @@ class WeekdayDiscountTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0,-1})
+    @ValueSource(ints = {0, -1})
     @DisplayName("평일할인은 주문개수가 0개 이하면 적용되지 않습니다.")
     void checkMenuCountTest(int count) {
         menuCount = count;

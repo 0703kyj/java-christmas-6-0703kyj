@@ -10,6 +10,7 @@ import christmas.domain.discount.GiveawayDiscount;
 import christmas.domain.discount.SpecialDiscount;
 import christmas.domain.discount.WeekdayDiscount;
 import christmas.domain.discount.WeekendDiscount;
+import christmas.util.EventCalculator;
 import christmas.util.TypeChanger;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -95,7 +96,7 @@ class DiscountServiceTest {
             "9999,1,0,3"
     })
     @DisplayName("평일 할인이 유효한 경우만 추가되어야 합니다.")
-    void setWeekdayDiscountTest(int beforeDiscountPrice,int desserts, int count, int day) {
+    void setWeekdayDiscountTest(int beforeDiscountPrice, int desserts, int count, int day) {
         EventDate eventDate = new EventDate(day);
         WeekdayDiscount weekdayDiscount = new WeekdayDiscount(
                 eventDate, desserts, beforeDiscountPrice);

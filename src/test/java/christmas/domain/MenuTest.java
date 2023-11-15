@@ -10,7 +10,7 @@ class MenuTest {
     private Order order;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         order = new Order();
     }
 
@@ -19,7 +19,7 @@ class MenuTest {
     void orderTest() {
         String name = "초코케이크";
         int orderCount = 3;
-        order.orderMenu(name,orderCount);
+        order.orderMenu(name, orderCount);
 
         assertThat(order.toString()).contains("3개");
     }

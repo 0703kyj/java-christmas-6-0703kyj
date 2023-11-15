@@ -12,6 +12,7 @@ public class GiveawayDiscount implements Discount {
     private static final int GIVEAWAY_COUNT = 1;
     private static final String DISCOUNT_TITLE = "증정 이벤트";
     private static final MenuValue GIVEAWAY = DrinkValue.CHAMPAGNE;
+
     private final Menu giveawayMenu;
     private final int beforeDiscountPrice;
 

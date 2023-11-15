@@ -11,14 +11,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 class EventDateTest {
 
     @ParameterizedTest
-    @ValueSource(ints = {0,32})
+    @ValueSource(ints = {0, 32})
     @DisplayName("입력 받은 날짜는 12월에 속해야 한다.")
     void notValidDateTest(int day) {
         assertThatThrownBy(() -> new EventDate(day))
                 .isInstanceOf(NotValidDateException.class);
     }
+
     @ParameterizedTest
-    @ValueSource(strings = {"일","이십삼"})
+    @ValueSource(strings = {"일", "이십삼"})
     @DisplayName("입력 받은 날짜는 숫자여야 한다.")
     void inputStringToDateTest(String day) {
         assertThatThrownBy(() -> TypeChanger.toIntDate(day))

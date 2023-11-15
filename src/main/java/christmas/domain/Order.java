@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class Order {
     private static final int MAX_ORDER_COUNT = 20;
+
     private List<Menu> totalMenu;
     private static int totalOrderCount;
 

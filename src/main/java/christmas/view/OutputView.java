@@ -16,7 +16,7 @@ public class OutputView {
     private static final String TOTAL_DISCOUNT_TITLE = "<혜택 내역>";
     private static final String TOTAL_DISCOUNT_PRICE_TITLE = "<총혜택 금액>";
     private static final String AFTER_DISCOUNT_TITLE = "<할인 후 예상 결제 금액>";
-    private static final String BADGE_TITLE = "<"+DateValue.EVENT_MONTH+"월 이벤트 배지>";
+    private static final String BADGE_TITLE = "<" + DateValue.EVENT_MONTH + "월 이벤트 배지>";
     private static final String PRICE_FORMAT = "%s원";
     private static final String NOTHING = "없음";
 
@@ -28,9 +28,9 @@ public class OutputView {
     }
 
     public void printBenefits(EventDate eventDate) {
-        try{
+        try {
             System.out.println(BENEFITS_TITLE.formatted(eventDate.getDay()));
-        }catch (NullPointerException exception){
+        } catch (NullPointerException exception) {
             throw new NotFoundEventDateException();
         }
     }
@@ -85,7 +85,7 @@ public class OutputView {
     public void printEventBadge(String badge) {
 
         System.out.println(BADGE_TITLE);
-        if(checkCanNotPrint(badge == null)) {
+        if (checkCanNotPrint(badge == null)) {
             return;
         }
         System.out.println(badge);

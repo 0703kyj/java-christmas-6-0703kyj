@@ -12,26 +12,26 @@ public class TypeChanger {
     private static final String DELIMITER_TOTAL_MENU = ",";
     private static final String DELIMITER_MENU = "-";
 
-    public static int toIntDate(String input){
-        try{
+    public static int toIntDate(String input) {
+        try {
             return Integer.parseInt(input);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new NotValidDateException();
         }
     }
 
-    public static Order toOrder(String input, Order order){
-        try{
+    public static Order toOrder(String input, Order order) {
+        try {
             return parseMenuInput(input, order);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new NotValidDateException();
         }
     }
 
-    private static int toIntOrder(String input){
-        try{
+    private static int toIntOrder(String input) {
+        try {
             return Integer.parseInt(input);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new NotValidOrderException();
         }
     }
@@ -50,13 +50,13 @@ public class TypeChanger {
     }
 
     private static void orderMenu(Order order, List<String> preMenu) {
-        if(preMenu.size()!=2){
+        if (preMenu.size() != 2) {
             throw new NotValidOrderException();
         }
-        order.orderMenu(preMenu.get(0),toIntOrder(preMenu.get(1)));
+        order.orderMenu(preMenu.get(0), toIntOrder(preMenu.get(1)));
     }
 
-    private static List<String> splitToDelimiter(String input, String delimiter){
+    private static List<String> splitToDelimiter(String input, String delimiter) {
         return Arrays.stream(input.split(delimiter))
                 .map(String::trim)
                 .collect(Collectors.toList());
