@@ -4,7 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.domain.EventDate;
 import christmas.domain.Order;
+import christmas.domain.discount.DdayDiscount;
+import christmas.domain.discount.Discount;
+import christmas.domain.discount.GiveawayDiscount;
+import christmas.domain.discount.SpecialDiscount;
+import christmas.domain.discount.WeekdayDiscount;
+import christmas.domain.discount.WeekendDiscount;
 import christmas.util.TypeChanger;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +26,6 @@ class DiscountServiceTest {
 
     @BeforeEach
     void beforeEach() {
-        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
         order = new Order();
         orderService = new OrderService(order);
         discountService = new DiscountService(order);
@@ -60,5 +66,93 @@ class DiscountServiceTest {
         int totalDiscountPriceExceptGiveaway = discountService.calculateTotalDiscountExceptGiveaway();
         //then
         assertThat(totalDiscountPriceExceptGiveaway).isEqualTo(price);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10000,1,3",
+            "10000,0,26",
+            "9999,0,3"
+    })
+    @DisplayName("디데이 할인이 유효한 경우만 추가되어야 합니다.")
+    void setDdayDiscountTest(int beforeDiscountPrice, int count, int day) {
+        EventDate eventDate = new EventDate(day);
+        DdayDiscount ddayDiscount = new DdayDiscount(eventDate, beforeDiscountPrice);
+
+        discountService.setDiscount(ddayDiscount);
+
+        List<Discount> totalDiscounts = discountService.getTotalDiscounts();
+        assertThat(totalDiscounts.size()).isEqualTo(count);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10000,2,0,2",
+            "10000,2,1,3",
+            "10000,0,0,3",
+            "9999,1,0,3"
+    })
+    @DisplayName("평일 할인이 유효한 경우만 추가되어야 합니다.")
+    void setWeekdayDiscountTest(int beforeDiscountPrice,int desserts, int count, int day) {
+        EventDate eventDate = new EventDate(day);
+        WeekdayDiscount weekdayDiscount = new WeekdayDiscount(
+                eventDate, desserts, beforeDiscountPrice);
+
+        discountService.setDiscount(weekdayDiscount);
+
+        List<Discount> totalDiscounts = discountService.getTotalDiscounts();
+        assertThat(totalDiscounts.size()).isEqualTo(count);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10000,2,1,2",
+            "10000,0,0,2",
+            "10000,2,0,3",
+            "9999,2,0,3"
+    })
+    @DisplayName("주말 할인이 유효한 경우만 추가되어야 합니다.")
+    void setWeekendDiscountTest(int beforeDiscountPrice, int mainMenus, int count, int day) {
+        EventDate eventDate = new EventDate(day);
+        WeekendDiscount weekendDiscount = new WeekendDiscount(
+                eventDate, mainMenus, beforeDiscountPrice);
+
+        discountService.setDiscount(weekendDiscount);
+
+        List<Discount> totalDiscounts = discountService.getTotalDiscounts();
+        assertThat(totalDiscounts.size()).isEqualTo(count);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "10000,0,2",
+            "10000,1,3",
+            "10000,1,25",
+            "9999,0,3"
+    })
+    @DisplayName("특별 할인이 유효한 경우만 추가되어야 합니다.")
+    void setSpecialDiscountTest(int beforeDiscountPrice, int count, int day) {
+        EventDate eventDate = new EventDate(day);
+        SpecialDiscount specialDiscount = new SpecialDiscount(eventDate, beforeDiscountPrice);
+
+        discountService.setDiscount(specialDiscount);
+
+        List<Discount> totalDiscounts = discountService.getTotalDiscounts();
+        assertThat(totalDiscounts.size()).isEqualTo(count);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "120000,1",
+            "119999,0"
+    })
+    @DisplayName("증정 메뉴 제공이 유효한 경우만 추가되어야 합니다.")
+    void setGiveawayDiscountTest(int beforeDiscountPrice, int count) {
+        GiveawayDiscount giveawayDiscount = new GiveawayDiscount(beforeDiscountPrice);
+
+        discountService.setDiscount(giveawayDiscount);
+
+        List<Discount> totalDiscounts = discountService.getTotalDiscounts();
+        assertThat(totalDiscounts.size()).isEqualTo(count);
     }
 }

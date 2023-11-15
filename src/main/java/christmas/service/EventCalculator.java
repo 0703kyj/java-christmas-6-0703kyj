@@ -78,7 +78,7 @@ public class EventCalculator {
                 new WeekdayDiscount(eventDate, orderService.getCountOfDesserts(),beforeDiscountPrice),
                 new WeekendDiscount(eventDate, orderService.getCountOfMainMenus(),beforeDiscountPrice),
                 new SpecialDiscount(eventDate,beforeDiscountPrice),
-                new GiveawayDiscount(orderService.getPriceBeforeDiscount())
+                new GiveawayDiscount(beforeDiscountPrice)
         );
     }
 }
