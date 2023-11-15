@@ -18,7 +18,7 @@ public class EventController {
     }
 
     public void run() {
-        outputView.printInfo();
+        outputView.printGreeting();
         input();
         eventCalculator.calculateDiscounts(eventDate);
         output();

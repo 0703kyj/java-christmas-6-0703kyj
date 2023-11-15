@@ -8,7 +8,7 @@ import christmas.util.DecimalFormatter;
 import java.util.List;
 
 public class OutputView {
-    private static final String INFO_MESSAGE = "안녕하세요! 우테코 식당 " + DateValue.EVENT_MONTH + "월 이벤트 플래너입니다.";
+    private static final String GREETING_MESSAGE = "안녕하세요! 우테코 식당 " + DateValue.EVENT_MONTH + "월 이벤트 플래너입니다.";
     private static final String BENEFITS_TITLE = DateValue.EVENT_MONTH + "월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n";
     private static final String ORDER_MENU_TITLE = "<주문 메뉴>";
     private static final String BEFORE_DISCOUNT_TITLE = "<할인 전 총주문 금액>";
@@ -23,8 +23,8 @@ public class OutputView {
     public OutputView() {
     }
 
-    public void printInfo() {
-        System.out.println(INFO_MESSAGE);
+    public void printGreeting() {
+        System.out.println(GREETING_MESSAGE);
     }
 
     public void printBenefits(EventDate eventDate) {
