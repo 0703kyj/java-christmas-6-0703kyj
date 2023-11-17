@@ -1,7 +1,16 @@
 package christmas;
 
+import christmas.config.EventConfig;
+import christmas.controller.EventController;
+
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        try {
+            EventController eventController = EventConfig.getEventController();
+            eventController.run();
+        } catch (IllegalStateException exception) {
+            System.out.println(exception);
+        }
     }
 }
